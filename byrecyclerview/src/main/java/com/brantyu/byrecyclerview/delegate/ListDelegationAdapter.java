@@ -17,6 +17,7 @@
 package com.brantyu.byrecyclerview.delegate;
 
 import android.support.annotation.NonNull;
+
 import java.util.List;
 
 /**
@@ -38,12 +39,12 @@ import java.util.List;
  * @param <T> The type of the items. Must be something that extends from List like List<Foo>
  * @author Hannes Dorfmann
  */
-public class ListDelegationAdapter<T extends List<?>> extends AbsDelegationAdapter<T> {
+public class ListDelegationAdapter<T extends List<?>> extends com.brantyu.byrecyclerview.delegate.AbsDelegationAdapter<T> {
 
   public ListDelegationAdapter() {
   }
 
-  public ListDelegationAdapter(@NonNull AdapterDelegatesManager<T> delegatesManager) {
+  public ListDelegationAdapter(@NonNull com.brantyu.byrecyclerview.delegate.AdapterDelegatesManager<T> delegatesManager) {
     super(delegatesManager);
   }
 

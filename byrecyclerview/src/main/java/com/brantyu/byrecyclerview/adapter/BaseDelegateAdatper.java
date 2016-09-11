@@ -56,6 +56,7 @@ public abstract class BaseDelegateAdatper<T extends DisplayableItem> extends Rec
         mList = list;
         mDelegatesManager = new AdapterDelegatesManager<>();
         initDelegatesManager(mDelegatesManager);
+        getEventDelegate().addData(list == null ? 0 : list.size());
     }
 
     public List<T> getData() {

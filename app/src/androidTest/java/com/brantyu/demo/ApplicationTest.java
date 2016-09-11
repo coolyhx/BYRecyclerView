@@ -1,4 +1,4 @@
-package com.brantyu.byrecyclerview;
+package com.brantyu.demo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

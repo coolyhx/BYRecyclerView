@@ -1,4 +1,4 @@
-package com.brantyu.byrecyclerview;
+package com.brantyu.demo;
 
 import org.junit.Test;
 

@@ -1,16 +1,16 @@
 package com.brantyu.demo;
 
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.brantyu.byrecyclerview.BYRecyclerView;
 import com.brantyu.byrecyclerview.adapter.DisplayableItem;
 import com.brantyu.byrecyclerview.adapter.OnLoadMoreListener;
+import com.brantyu.byrecyclerview.decoration.DividerDecoration;
 import com.brantyu.demo.model.Advertisement;
 import com.brantyu.demo.model.Cat;
 import com.brantyu.demo.model.Dog;
@@ -38,16 +38,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mAdapter = new MainAdapter(this, getAnimals());
         mBYRecyclerView.setAdapter(mAdapter);
         mBYRecyclerView.setOnRefreshListener(this);
+        mBYRecyclerView.addItemDecoration(new DividerDecoration(Color.BLACK,3).setDrawLastItem(false));
         mAdapter.setMore(R.layout.load_more,this);
         mAdapter.setNoMore(R.layout.no_more);
         mAdapter.setError(R.layout.load_more_error);
 
-        findViewById(R.id.reptielsActivity).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ReptilesActivity.class));
-            }
-        });
     }
 
     private List<DisplayableItem> getAnimals() {

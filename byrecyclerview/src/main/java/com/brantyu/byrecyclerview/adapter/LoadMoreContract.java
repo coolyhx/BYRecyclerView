@@ -1,11 +1,15 @@
 package com.brantyu.byrecyclerview.adapter;
 
 import android.view.View;
-
-public interface EventDelegate {
+/**
+ * Created by brantyu on 16/8/23.
+ */
+public interface LoadMoreContract {
     void addData(int length);
 
     void clear();
+
+    void startLoadMore();
 
     void stopLoadMore();
 

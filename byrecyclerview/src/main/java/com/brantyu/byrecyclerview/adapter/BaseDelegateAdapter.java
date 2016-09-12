@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by brantyu on 16/8/23.
  */
-public abstract class BaseDelegateAdatper<T extends DisplayableItem> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class BaseDelegateAdapter<T extends DisplayableItem> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<T> mList;
     private Activity mContext;
@@ -31,7 +31,7 @@ public abstract class BaseDelegateAdatper<T extends DisplayableItem> extends Rec
 
     RecyclerView.AdapterDataObserver mObserver;
 
-    protected EventDelegate mEventDelegate;
+    protected LoadMoreContract mEventDelegate;
     protected ArrayList<ItemView> headers = new ArrayList<>();
     protected ArrayList<ItemView> footers = new ArrayList<>();
 
@@ -39,15 +39,15 @@ public abstract class BaseDelegateAdatper<T extends DisplayableItem> extends Rec
     protected OnItemLongClickListener mItemLongClickListener;
 
 
-    public BaseDelegateAdatper(Activity context) {
+    public BaseDelegateAdapter(Activity context) {
         init(context, new ArrayList<T>());
     }
 
-    public BaseDelegateAdatper(Activity context, T[] list) {
+    public BaseDelegateAdapter(Activity context, T[] list) {
         init(context, Arrays.asList(list));
     }
 
-    public BaseDelegateAdatper(Activity context, List<T> list) {
+    public BaseDelegateAdapter(Activity context, List<T> list) {
         init(context, list);
     }
 
@@ -56,7 +56,6 @@ public abstract class BaseDelegateAdatper<T extends DisplayableItem> extends Rec
         mList = list;
         mDelegatesManager = new AdapterDelegatesManager<>();
         initDelegatesManager(mDelegatesManager);
-        getEventDelegate().addData(list == null ? 0 : list.size());
     }
 
     public List<T> getData() {
@@ -139,8 +138,10 @@ public abstract class BaseDelegateAdatper<T extends DisplayableItem> extends Rec
     }
 
 
-    EventDelegate getEventDelegate() {
-        if (mEventDelegate == null) mEventDelegate = new DefaultEventDelegate(this);
+    LoadMoreContract getEventDelegate() {
+        if (mEventDelegate == null) {
+            mEventDelegate = new LoadMoreHelper(this);
+        }
         return mEventDelegate;
     }
 
@@ -203,7 +204,9 @@ public abstract class BaseDelegateAdatper<T extends DisplayableItem> extends Rec
 
     public void add(T object) {
         if (object != null) {
-            if (mEventDelegate != null) mEventDelegate.addData(1);
+            if (mEventDelegate != null) {
+                mEventDelegate.addData(1);
+            }
             synchronized (mLock) {
                 mList.add(object);
             }
@@ -223,7 +226,9 @@ public abstract class BaseDelegateAdatper<T extends DisplayableItem> extends Rec
     public void addAll(Collection<? extends T> collection) {
         if (collection != null && collection.size() > 0) {
             int dataCount = collection.size();
-            if (mEventDelegate != null) mEventDelegate.addData(dataCount);
+            if (mEventDelegate != null) {
+                mEventDelegate.addData(dataCount);
+            }
             synchronized (mLock) {
                 mList.addAll(collection);
             }
@@ -292,6 +297,9 @@ public abstract class BaseDelegateAdatper<T extends DisplayableItem> extends Rec
         synchronized (mLock) {
             mList.clear();
         }
+        if (mEventDelegate != null) {
+            mEventDelegate.clear();
+        }
         if (mObserver != null) {
             mObserver.onItemRangeRemoved(0, count);
         }
@@ -328,9 +336,9 @@ public abstract class BaseDelegateAdatper<T extends DisplayableItem> extends Rec
                 return view;
             }
         }
-        for (ItemView footerview : footers) {
-            if (footerview.hashCode() == viewType) {
-                View view = footerview.onCreateView(parent);
+        for (ItemView footerView : footers) {
+            if (footerView.hashCode() == viewType) {
+                View view = footerView.onCreateView(parent);
                 StaggeredGridLayoutManager.LayoutParams layoutParams;
                 if (view.getLayoutParams() != null)
                     layoutParams = new StaggeredGridLayoutManager.LayoutParams(view.getLayoutParams());

@@ -19,7 +19,7 @@ package com.brantyu.demo;
 
 import android.app.Activity;
 
-import com.brantyu.byrecyclerview.adapter.BaseDelegateAdatper;
+import com.brantyu.byrecyclerview.adapter.BaseDelegateAdapter;
 import com.brantyu.byrecyclerview.adapter.DisplayableItem;
 import com.brantyu.byrecyclerview.delegate.AdapterDelegatesManager;
 import com.brantyu.demo.adapterdelegates.AdvertisementAdapterDelegate;
@@ -31,7 +31,7 @@ import com.brantyu.demo.adapterdelegates.SnakeListItemAdapterDelegate;
 import java.util.List;
 
 
-public class MainAdapter extends BaseDelegateAdatper<DisplayableItem> {
+public class MainAdapter extends BaseDelegateAdapter<DisplayableItem> {
 
     public MainAdapter(Activity context) {
         super(context);

@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.brantyu.byrecyclerview.adapter.BaseDelegateAdatper;
+import com.brantyu.byrecyclerview.adapter.BaseDelegateAdapter;
 
 /**
  * Created by brantyu on 16/8/23.
@@ -178,8 +178,8 @@ public class BYRecyclerView extends SwipeRefreshLayout {
         private void update() {
             log("update");
             int count;
-            if (recyclerView.getAdapter() instanceof BaseDelegateAdatper) {
-                count = ((BaseDelegateAdatper) recyclerView.getAdapter()).getItemCount();
+            if (recyclerView.getAdapter() instanceof BaseDelegateAdapter) {
+                count = ((BaseDelegateAdapter) recyclerView.getAdapter()).getItemCount();
             } else {
                 count = recyclerView.getAdapter().getItemCount();
             }
@@ -215,8 +215,8 @@ public class BYRecyclerView extends SwipeRefreshLayout {
         mRecycler.setAdapter(adapter);
         adapter.registerAdapterDataObserver(new BYDataObserver(this));
         //只有Adapter为空时才显示ProgressView
-        if (adapter instanceof BaseDelegateAdatper) {
-            if (((BaseDelegateAdatper) adapter).getItemCount() == 0) {
+        if (adapter instanceof BaseDelegateAdapter) {
+            if (((BaseDelegateAdapter) adapter).getItemCount() == 0) {
                 showProgress();
             } else {
                 showRecycler();

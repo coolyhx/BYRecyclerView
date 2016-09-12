@@ -26,6 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
     BYRecyclerView mBYRecyclerView;
     MainAdapter mAdapter;
+    int mCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mBYRecyclerView.setAdapter(mAdapter);
         mBYRecyclerView.setOnRefreshListener(this);
         mAdapter.setMore(R.layout.load_more,this);
+        mAdapter.setNoMore(R.layout.no_more);
+        mAdapter.setError(R.layout.load_more_error);
 
         findViewById(R.id.reptielsActivity).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         animals.add(new Advertisement());
         animals.add(new Advertisement());
         animals.add(new Advertisement());
-        animals.add(new Advertisement());
-        animals.add(new Advertisement());
 
         Collections.shuffle(animals);
         return animals;
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 super.onPostExecute(integer);
                 mAdapter.clear();
                 mAdapter.addAll(getAnimals());
+                mCount=0;
             }
         }.execute();
 
@@ -117,8 +119,28 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             protected void onPostExecute(Integer integer) {
                 super.onPostExecute(integer);
-                mAdapter.addAll(getAnimals());
+                mCount++;
+                switch (mCount){
+                    case 1:
+                        mAdapter.addAll(getAnimals());
+                        break;
+                    case 2:
+                        mAdapter.pauseMore();
+                        break;
+                    case 3:
+                        mAdapter.addAll(getAnimals());
+                        break;
+                    case 4:
+                        mAdapter.stopMore();
+                        break;
+                }
+
             }
         }.execute();
+    }
+
+    @Override
+    public void onReloadMore() {
+        onLoadMore();
     }
 }

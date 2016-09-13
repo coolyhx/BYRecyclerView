@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.brantyu.demo;
+package com.brantyu.demo.adapter;
 
 
 import android.app.Activity;

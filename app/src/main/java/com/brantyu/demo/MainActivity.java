@@ -11,6 +11,7 @@ import com.brantyu.byrecyclerview.BYRecyclerView;
 import com.brantyu.byrecyclerview.adapter.DisplayableItem;
 import com.brantyu.byrecyclerview.adapter.OnLoadMoreListener;
 import com.brantyu.byrecyclerview.decoration.DividerDecoration;
+import com.brantyu.demo.adapter.MainAdapter;
 import com.brantyu.demo.model.Advertisement;
 import com.brantyu.demo.model.Cat;
 import com.brantyu.demo.model.Dog;
